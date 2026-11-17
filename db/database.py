@@ -29,7 +29,6 @@ def init_db():   # эта функция отвечает за инициали�
     if not conn.execute(GET_ALL_QUESTIONS).fetchall():
         for q_text, q_answer in QUESTIONS:
             conn.execute(INSERT_QUESTION, (q_text, q_answer))
-
-    conn.commit()   # commit -- сохраняет результат в базе данных
-    conn.close()    # закрывет соединение с базой данных
+    conn.commit()   
+    conn.close()    
 

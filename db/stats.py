@@ -14,6 +14,7 @@ def get_top():
     conn.close()
     return [dict(r) for r in rows]
 
+
 def get_hardest():
     conn = get_db()
     row = conn.execute(GET_HARDEST).fetchone()

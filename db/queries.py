@@ -1,6 +1,8 @@
+# Создаем запросы для создания таблиц:
 # USERS
 # QUESTIONS
 # RESULTS
+
 
 
 CREATE_USERS_TABLE = '''
@@ -19,6 +21,7 @@ CREATE_USERS_TABLE = '''
 # ЭТА ТАБЛИЦА -- СПИСОК ВСЕХ, КТО ХОТЬ РАЗ НАЖАЛ /start
 
 
+
 CREATE_QUESTIONS_TABLE = '''
     CREATE TABLE IF NOT EXISTS questions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,6 +29,7 @@ CREATE_QUESTIONS_TABLE = '''
         correct_answer TEXT NOT NULL
     )
 '''
+
 
 
 CREATE_RESULTS_TABLE = '''
@@ -73,31 +77,22 @@ DELETE_USER = 'DELETE FROM users WHERE telegram_id = ?'    # удаляет за
 
 # --QUESTIONS--
 
-GET_ALL_QUESTIONS = 'SELECT * FROM questions'
+GET_ALL_QUESTIONS = 'SELECT * FROM questions'   # взять/выбрать все вопросы
+GET_QUESTION_BY_ID = 'SELECT FROM * questions WHERE id = ?'     # взять один вопрос по его id
+UPDATE_QUESTION = 'UPDATE questions SET question_text = ?'      # изменить/обновить текст вопроса
+DELETE_QUESTION = 'DELETE FROM questions WHERE id = ?'      # удалить вопрос
+INSERT_QUESTION = 'INSERT INTO questions (question_text, correct_answer) VALUES (?, ?)'     # добавить новый вопрос, параметры: текст + правильный ответ
 
-CREATE_QUESTION = 'INSERT INTO questions (question_text, correct_answer) VALUES (?, ?)'
-
-GET_QUESTION_BY_ID = 'SELECT FROM * questions WHERE id = ?'
-
-UPDATE_QUESTION = 'UPDATE questions SET question_text = ?'
-
-DELETE_QUESTION = 'DELETE FROM questions WHERE id = ?'
-
-INSERT_QUESTION = 'INSERT INTO questions (question_text, correct_answer) VALUES (?, ?)'
 
 
 
 # -- RESULTS --
 
-INSERT_RESULT = 'INSERT INTO results (user_id, question_id, is_correct) VALUES (?, ?, ?)'
-
-GET_ALL_RESULTS = 'SELECT * FROM results'
-
-UPDATE_RESULT = 'UPDATE results SET is_correct = ? WHERE user_id = ? AND question_id = ?'
-
-DELETE_RESULTS = 'DELETE FROM results WHERE user_id = ? AND question_id = ?'
-
-GET_SCORE_BY_USER_ID = 'SELECT COUNT(*) as total, SUM(is_correct) as correct FROM results WHERE user_id = ?'
+INSERT_RESULT = 'INSERT INTO results (user_id, question_id, is_correct) VALUES (?, ?, ?)'   # добавить/записать как пользователь ответил (его результат)
+GET_ALL_RESULTS = 'SELECT * FROM results'   # выбрать все результаты
+UPDATE_RESULT = 'UPDATE results SET is_correct = ? WHERE user_id = ? AND question_id = ?'   # исправить ответ
+DELETE_RESULTS = 'DELETE FROM results WHERE user_id = ? AND question_id = ?'    # удалить результат
+GET_SCORE_BY_USER_ID = 'SELECT COUNT(*) as total, SUM(is_correct) as correct FROM results WHERE user_id = ?'    # подчитывает количество всех ответов, суммирует (правильных) конкретного пользователя
 
 
 
@@ -114,6 +109,7 @@ GET_HISTORY = '''
     ORDER BY results.id 
     LIMIT 10
 '''
+
 
 
 GET_TOP = '''
@@ -141,23 +137,32 @@ GET_HARDEST = '''
     LIMIT 1
 '''
 
+
 # Фильтрация, группировка (GROUP BY), HAVING 
 
-# AS -- 
-# ROUND() -- 
-# ORDER BY() -- 
-# enumerate() -- 
+# AS -- используется для назначения временного имени колонке или таблице 
+# синтаксис: SELECT column_name AS c FROM table_name 
+
+# ROUND() -- используется для округления чисел до указанного количества знаков после запятой или до ближайшего целого числа 
+# синтаксис: ROUND(число, точность)
+
+# ORDER BY() -- используется для сортировки результатов запроса одному или нескольким колонкам. По умолчанию данные сортируются по возрастанию(ASC)
+# существует таже сортировка по убыванию (DESC)
+
+# enumerate() -- В Python эта функция используется для одновременного получения индекса и значения элемента при переборе списка, строки или любого другого итерируемого объекта в цикле
+# синтаксис: enumerate(iterable, start=0) start -- число с которого начинается подсчет индексов
+
 
 # -- Агрегатные функции --
 
-# COUNT(*) --
-# SUM() --
-# AVG() --
-# MIN() --
-# MAX() --
+# COUNT(*) -- считает количество строк 
+# SUM() -- складывает, суммирует все числа в колонке
+# AVG() -- находит среднее арифметическое
+# MIN() -- ищет минимальное значение 
+# MAX() -- ищет максимальное значение
 
 
-# GROUP BY() --
+# GROUP BY() --  делит таблицу на группы по какому то признаку
 
-# HAVING() --
+# HAVING() -- фильтрирует уже готовые группы
 
