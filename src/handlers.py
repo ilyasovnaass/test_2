@@ -3,11 +3,13 @@ from aiogram.types import Message, CallbackQuery
 from aiogram.filters import CommandStart, Command
 from aiogram.fsm.context import FSMContext
 
-from my_db.users import get_user, create_user
-from my_db.task import add_task, get_tasks, get_task_by_num, mark_task_done, delete_task, get_stats
-from source.state import AddTask, DoneTask, DeleteTask
-from source.keyboards import inline_buttons
-
+from src.state import Quiz, AddQuestion, DeleteQuestion
+from src.questions import QUESTIONS
+from src.keyboards import reply_buttons, inline_buttons, repeat_buttons
+from db.users import get_user, create_user, update_user, delete_user
+from db.questions import get_all_questions, create_question, delete_question
+from db.results import save_result
+from db.stats import get_history, get_top, get_hardest
 
 
 router = Router()
